@@ -19,7 +19,7 @@ module.exports = (argv, terminal) => {
             terminal.writeln('');
             i = 0;
         } else i++;
-        terminal.write('\033[1;32m' + x + '\033[0m  ');
+        terminal.write('\033[1;32m' + x + '\033[0m\t');
     });
     terminal.writeln('');
 }
