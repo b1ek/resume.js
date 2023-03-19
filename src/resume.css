@@ -1,0 +1,43 @@
+div#resume_js_app {
+  background: #212121;
+  width:1000px;
+  height:800px;
+  border: 1px solid #e1e1e1;
+  border-radius: 6px;
+  font-family: monospace;
+  box-shadow: 0 2px 1px #303030A0;
+  color: #e1e1e1 !important;
+  padding: 8px 2px;
+  transition: 150ms ease;
+}
+div#resume_js_app:hover {
+  box-shadow: 0 2px 3px #303030;
+}
+div#resume_js_app p.js_loading_indicator {
+  padding: 0; margin: 0;
+  position: relative;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  text-align: center;
+}
+
+
+div#resume_js_app * {
+  color: #e1e1e1;
+  font-family: 'Source Code Pro', monospace !important;
+}
+div#resume_js_app a, div#resume_js_app a:visited {
+  color: rgb(36, 85, 126) !important;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 150ms ease;
+  text-shadow: 0 0 0px #24557e30;
+}
+div#resume_js_app a:hover {
+  text-shadow: 0 0 4px #24557e30;
+}
+div#resume_js_app table * {
+  border:0;
+  text-align: left;
+}
