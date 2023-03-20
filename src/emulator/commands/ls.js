@@ -23,10 +23,6 @@ module.exports = (argv, terminal) => {
     const long_format = has_arg('-l');
 
     directories.shift();
-
-    // remove .* files if -a not specified
-    if (!all)
-        directories = directories.filter(x => !x.startsWith('.'));
     
     // remove arguments
     directories = directories.filter(x => !x.startsWith('-'));
@@ -52,7 +48,10 @@ module.exports = (argv, terminal) => {
             terminal.writeln(`${argv[0]}: cannot access '${dir}': No such file or directory`);
             return;
         }
-        let files = fs.readdirSync(dir);
+        let files = ['.', '..', ...fs.readdirSync(dir)];
+        if (!all)
+            files = files.filter(x => !x.startsWith('.'));
+
         files.forEach((file, i) => {
 
             if (!long_format)
