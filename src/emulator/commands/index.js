@@ -11,6 +11,7 @@ let cmds = {
     'import_file': require('./import_file'),
     'zsh': require('./zsh'),
     'ps': require('./ps'),
+    'clear': require('./clear'),
 
     // alias l='ls -l'
     'l': (a,t) => {require('./ls')([...a, '-l'], t)},

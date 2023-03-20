@@ -1,5 +1,6 @@
 import React from 'react';
-import { XTerm } from 'xterm-for-react'
+import { XTerm } from 'xterm-for-react';
+import { Terminal } from 'xterm';
 
 export class Console extends React.Component {
     constructor(props) {
@@ -16,14 +17,21 @@ export class Console extends React.Component {
                                 background: '#212121',
                                 brightGreen: '#15a179'
                             },
-                            convertEol: true
+                            convertEol: true,
+                            rows: 30,
+                            cols: 200
                         }}
                     />
                 </div>;
     }
 
     componentDidMount() {
-        require('./emulator')(this.terminal.current);
-        this.terminal.current.terminal.focus(); 
+        const term_ref = this.terminal.current;
+        require('./emulator')(term_ref);
+
+        /** @type { Terminal } */
+        const terminal = term_ref.terminal;
+
+        terminal.focus();
     }
 }
