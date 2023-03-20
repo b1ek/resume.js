@@ -56,7 +56,7 @@ module.exports = (argv, terminal) => {
         files.forEach((file, i) => {
 
             if (!long_format)
-                terminal.write(file + '\033[0m  ');
+                terminal.write(file + '\033[0m\t');
             else
                 terminal.writeln('drwx-xr-x  1 nobody nobody 4.0K Jan 1 13 01:00 ' + file);
             if ((i+1) % 5 == 0)
