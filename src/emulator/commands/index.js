@@ -12,6 +12,7 @@ let cmds = {
     'zsh': require('./zsh'),
     'ps': require('./ps'),
     'clear': require('./clear'),
+    'rm': require('./rm'),
 
     // alias l='ls -l'
     'l': (a,t) => {require('./ls')([...a, '-l'], t)},
