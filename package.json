@@ -1,8 +1,7 @@
 {
   "name": "resume",
   "version": "1.0.0",
-  "main": "src/resume.js",
-  "source": "src/index.html",
+  "source": "src/resume.html",
   "author": "blek",
   "license": "MIT",
   "devDependencies": {
