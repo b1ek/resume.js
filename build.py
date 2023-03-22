@@ -4,16 +4,15 @@ import json, os
 
 package = {}
 
-with open('package.json', 'tr', encoding='utf-8') as f:
+with open('package.json', 'r+', encoding='utf-8') as f:
     package = json.loads(f.read());
-
-package['source'] = 'src/resume.js';
-
-with open('package.json', 'tw', encoding='utf-8') as f:
-    f.write(json.dumps(package));
+    f.seek(0);
+    package['source'] = 'src/resume.js';
+    f.truncate(0);
+    f.write(json.dumps(package, indent=2) + '\n');
 
 os.system('parcel build');
 
 with open('package.json', 'w+', encoding='utf-8') as f:
     package['source'] = 'src/resume.html';
-    f.write(json.dumps(package));
+    f.write(json.dumps(package, indent=2) + '\n');

@@ -3,8 +3,6 @@ yarn.lock
 package-lock.json
 dist
 
-.parcelrc
-
 *.log
 *.tmp
 
