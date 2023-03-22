@@ -4,7 +4,6 @@ let cmds = {
     'cmdls': require('./cmds'),
     'help': require('./cmds'),
     'ls': require('./ls'),
-    'skills': require('./skills'),
     'mkdir': require('./mkdir'),
     'wget': require('./wget'),
     'export_file': require('./export_file'),
@@ -13,6 +12,10 @@ let cmds = {
     'ps': require('./ps'),
     'clear': require('./clear'),
     'rm': require('./rm'),
+
+
+    'guide': require('./guide'),
+    'skills': require('./skills'),
 
     // alias l='ls -l'
     'l': (a,t) => {require('./ls')([...a, '-l'], t)},
