@@ -5,11 +5,7 @@ yarn install
 yarn run build
 
 while true; do
-		read -p "Do you want to copy dist to ../../public/static/dist? (Y/n): " yn
-		case $yn in
-				[Yy]* cp dist ../../public/static/dist; break;;
-				[Nn]* break;;
-				[]* ) cp dist ../../public/static/dist; break;;
-				* ) echo "(Y/n)";;
-		esac
+	read -p "Do you want to copy dist to ../../public/static? (type n for no): " answer
+	if [ $answer = 'n' ] || [ $answer = 'N' ]; then exit 0; fi
+	cp dist ../../public/static
 done
