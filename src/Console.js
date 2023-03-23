@@ -6,6 +6,17 @@ export class Console extends React.Component {
     constructor(props) {
         super(props);
         this.terminal = React.createRef(null);
+
+        this.terminal_el = document.getElementById('resume_js_app');
+        const t_width = this.terminal_el.clientWidth - 60;
+        const t_height = this.terminal_el.clientHeight - 60;
+
+        this.state = {
+            term_box: {
+                width: Math.floor(t_width / 9),
+                height: Math.floor(t_height / 18)
+            }
+        };
     }
 
     render() {
@@ -18,8 +29,8 @@ export class Console extends React.Component {
                                 brightGreen: '#15a179'
                             },
                             convertEol: true,
-                            rows: 30,
-                            cols: 200
+                            rows: this.state.term_box.height,
+                            cols: this.state.term_box.width
                         }}
                     />
                 </div>;
@@ -32,6 +43,16 @@ export class Console extends React.Component {
         /** @type { Terminal } */
         const terminal = term_ref.terminal;
 
-        terminal.focus();
+        window.onresize = (ev) => {
+            const t_width = this.terminal_el.clientWidth;
+            const t_height = this.terminal_el.clientHeight;
+            this.setState({
+                term_box: {
+                    width: Math.floor(t_width / 27),
+                    height: Math.floor(t_height / 6.7)
+                }
+            })
+        };
+
     }
 }
