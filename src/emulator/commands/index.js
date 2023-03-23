@@ -12,6 +12,9 @@ let cmds = {
     'ps': require('./ps'),
     'clear': require('./clear'),
     'rm': require('./rm'),
+    'echo': require('./echo'),
+    'exit': require('./exit'),
+    'systemctl': require('./systemctl'),
 
 
     'guide': require('./guide'),
