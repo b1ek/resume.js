@@ -42,6 +42,7 @@ export class Console extends React.Component {
 
         /** @type { Terminal } */
         const terminal = term_ref.terminal;
+        terminal.focus();
 
         window.onresize = (ev) => {
             const t_width = this.terminal_el.clientWidth;
