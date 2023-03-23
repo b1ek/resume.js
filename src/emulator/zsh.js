@@ -16,7 +16,7 @@ let terminal;
  */
 let dom;
 
-const prompt = '\033[1;32muser@blek.codes \033[36m~ $ \033[0m';
+const prompt = `\x1b[1;32muser@${data.ip} \x1b[36m~ $ \x1b[0m`;
 let cmd = '';
 let lastcmd = window.sessionStorage.getItem('last_cmd') || '';
 
