@@ -48,7 +48,7 @@ Usage: ${argv[0]} [URL] [-O out.file] [-V] [-Q] [-s]
     let file;
 
     let req = new XMLHttpRequest();
-    req.open('GET', 'http://cors.blek.codes/' + url, true);
+    req.open('GET', window.location.protocol + '//cors.blek.codes/' + url, true);
     req.responseType = 'arraybuffer';
     req.onprogress = progress;
     req.onload = (e) => {
