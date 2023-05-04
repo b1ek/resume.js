@@ -15,6 +15,7 @@ let cmds = {
     'echo': require('./echo'),
     'exit': require('./exit'),
     'systemctl': require('./systemctl'),
+    'set-hostname': require('./set-hostname.js'),
 
 
     'guide': require('./guide'),

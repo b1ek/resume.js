@@ -2,9 +2,18 @@
 import { Terminal } from 'xterm';
 import { XTerm } from 'xterm-for-react';
 
+const memfs = require('memfs');
 const fs = require('./fs');
 global.fs = fs;
 const cmds = require('./commands');
+const sleep = require('../lib/sleep');
+
+// ZSH api to be used in commands (see references)
+const zshapi = {
+    update_prompt,
+    text_prompt,
+    pr_char
+};
 
 /**
  * @type { Terminal }
@@ -16,9 +25,13 @@ let terminal;
  */
 let dom;
 
-const prompt = `\x1b[1;32muser@${data.ip} \x1b[36m~ $ \x1b[0m`;
+let prompt = `\x1b[1;32muser@${data.ip} \x1b[36m~ $ \x1b[0m`;
 let cmd = '';
 let lastcmd = window.sessionStorage.getItem('last_cmd') || '';
+
+function update_prompt() {
+    prompt = `\x1b[1;32muser@${data.ip} \x1b[36m~ $ \x1b[0m`;
+}
 
 function text_prompt() {
     return prompt.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '');
@@ -44,13 +57,15 @@ function exec_file(f) {
         return;
     }
 
-    const executable = fs.accessSync(f, fs.constants.X_OK);
+    // This fails for some reason (vvvv)
+    const executable = fs.accessSync(f, memfs.constants.X_OK);
+    // const executable = true;
     if (!executable) {
-        terminal.writeln('zsh: permission denied: ' + f);
+        terminal.write('zsh: permission denied: ' + f);
         return;
     }
     
-    terminal.writeln('This is an online resume. It is not big enough to have a script runtime.\n');
+    terminal.writeln('This is just a simple online resume. It is not big enough to have a script runtime for god\'s sake.');
     return;
 }
 
@@ -77,9 +92,7 @@ async function exec_cmd() {
     if (cmds[command] != undefined) {
         const startY = terminal.buffer.normal.cursorY
 
-        await cmds[command](c.split(' '), terminal);
-
-        await (new Promise(resolve => setTimeout(resolve, 10)));
+        await cmds[command](c.split(' '), terminal, zshapi);
 
         if (terminal.buffer.active.cursorX != 0 && startY != terminal.buffer.active.cursorY) {
             terminal.write('\033[30;47m%\033[0m\n');
