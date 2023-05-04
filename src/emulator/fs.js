@@ -19,4 +19,6 @@ if (!fs.existsSync('dev'))
     }
 })();
 
+ufs.constants = fs.constants;
+
 module.exports = ufs;
