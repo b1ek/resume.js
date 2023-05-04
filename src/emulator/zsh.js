@@ -8,13 +8,6 @@ global.fs = fs;
 const cmds = require('./commands');
 const sleep = require('../lib/sleep');
 
-// ZSH api to be used in commands (see references)
-const zshapi = {
-    update_prompt,
-    text_prompt,
-    pr_char
-};
-
 /**
  * @type { Terminal }
  */
@@ -24,6 +17,15 @@ let terminal;
  * @type { XTerm }
  */
 let dom;
+
+// ZSH api to be used in commands (see references)
+const zshapi = {
+    update_prompt,
+    text_prompt,
+    pr_char,
+    terminal,
+    dom
+};
 
 let prompt = `\x1b[1;32muser@${data.ip} \x1b[36m~ $ \x1b[0m`;
 let cmd = '';
@@ -40,6 +42,14 @@ function text_prompt() {
 /**
  * 
  * @param { string } char 
+// ZSH api to be used in commands (see references)
+const zshapi = {
+    update_prompt,
+    text_prompt,
+    pr_char,
+    terminal,
+    dom
+};
  * @param { KeyboardEvent } dom 
  */
 function pr_char(char, dom) {
