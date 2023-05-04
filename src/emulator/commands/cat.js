@@ -23,6 +23,9 @@ module.exports = (argv, terminal) => {
             terminal.writeln(`${argv[0]}: ${file}: no such file or directory`);
             return;
         }
+        if (!fs.accessSync(file, fs.constants.R_OK)) {
+            terminal.writeln(`${argv[0]}: read ${file}: access denied`);
+        }
         const lines = fs.readFileSync(file).toString().split('\n');
         
         if (numbers) {
