@@ -22,4 +22,5 @@ module.exports = (argv, terminal) => {
         terminal.write('\033[1;32m' + x + '\033[0m\t');
     });
     terminal.writeln('');
+    terminal.writeln('Hint: If you are looking for a guide to use it, run the \x1b[32mguide\33[0m command')
 }
