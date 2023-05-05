@@ -22,6 +22,11 @@ module.exports = (argv, terminal, zsh) => {
         return 0;
     }
 
+    if (argv[1] == 'blek.codes') {
+        terminal.writeln(`${argv[0]}: cannot set hostname to ${argv[1]}: permission denied (you are not on blek.codes you moron)`);
+        return 1;
+    }
+
     data.ip = argv[1];
     zsh.update_prompt();
     return 0;
