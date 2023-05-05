@@ -8,7 +8,6 @@ let cmds = {
     'wget': require('./wget'),
     'export_file': require('./export_file'),
     'import_file': require('./import_file'),
-    'zsh': require('./zsh'),
     'ps': require('./ps'),
     'clear': require('./clear'),
     'rm': require('./rm'),
@@ -16,6 +15,10 @@ let cmds = {
     'exit': require('./exit'),
     'systemctl': require('./systemctl'),
     'set-hostname': require('./set-hostname.js'),
+    
+    // funny stuff
+    'su': require('./su'),
+    'zsh': require('./zsh'),
 
 
     'guide': require('./guide'),

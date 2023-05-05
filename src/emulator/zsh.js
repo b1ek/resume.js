@@ -23,8 +23,9 @@ const zshapi = {
     update_prompt,
     text_prompt,
     pr_char,
+    get_stdin,
     terminal,
-    dom
+    dom,
 };
 
 let prompt = `\x1b[1;32muser@${data.ip} \x1b[36m~ $ \x1b[0m`;
@@ -39,17 +40,71 @@ function text_prompt() {
     return prompt.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '');
 }
 
+let stdin_open = false;
+
+/**
+ * 
+ * @param {{hide: boolean}} opt 
+ * @returns 
+ */
+async function get_stdin(opt) {
+
+    if (opt == undefined) opt = {};
+
+    if (stdin_open) {
+        return 0;
+    }
+    stdin_open = true;
+
+    let input = '';
+
+    const get_char = function(e) {
+        if (break_loop) return;
+
+        /** @type {KeyboardEvent} */
+        const dom = e.domEvent;
+
+        const startX = terminal.buffer.active.cursorX;
+
+        if ((dom.key.length == 1 && !(dom.ctrlKey || dom.altKey))) {
+            // non-special key
+            if (!opt.hide) terminal.write(dom.key);
+            input += dom.key;
+        } else {
+            // special key
+            switch (dom.keyCode) {
+                case 8:
+                    if (terminal.buffer.active.cursorX <= startX) return;
+                    terminal.write('\b \b');
+                    input = input.substring(0, input.length - 1);
+                case 13:
+                    break_loop = true;
+                    terminal.write('\n');
+                    break;
+                case 68:
+                    if (dom.ctrlKey && dom.key.toLowerCase() == 'd') {
+                        terminal.write('\x1b[0m\x1b[49m^D\x1b[0m');
+                        break_loop = true;
+                    }
+            }
+        }
+    }
+    let break_loop = false
+
+    terminal.onKey(get_char)
+
+    while (1) {
+        await sleep(5);
+        if (break_loop) break;
+    }
+
+    stdin_open = false;
+    return input;
+}
+
 /**
  * 
  * @param { string } char 
-// ZSH api to be used in commands (see references)
-const zshapi = {
-    update_prompt,
-    text_prompt,
-    pr_char,
-    terminal,
-    dom
-};
  * @param { KeyboardEvent } dom 
  */
 function pr_char(char, dom) {
@@ -179,6 +234,13 @@ async function control_char(id, dom) {
             terminal.write(lastcmd);
             break;
         
+        case 40:
+            if (cmd == '') break;
+            lastcmd = cmd;
+            reprint_prompt();
+            cmd = '';
+            break;
+
         // Ctrl+c
         case 67:
             if (dom.ctrlKey) {
@@ -204,6 +266,7 @@ async function control_char(id, dom) {
         
         case 68:
             if (dom.ctrlKey && dom.key.toLowerCase() == 'd') {
+                alert('you are a moron. zsh runs with PID 1');
                 terminal.writeln('');
                 pr_char = () => {};
                 exec_cmd = pr_char;
@@ -231,6 +294,8 @@ async function control_char(id, dom) {
 }
 
 function key(e) {
+    if (stdin_open) return;
+
     /** @type {KeyboardEvent} */
     const dom = e.domEvent;
     if (dom.key.length == 1 && !(dom.ctrlKey || dom.altKey)) {
