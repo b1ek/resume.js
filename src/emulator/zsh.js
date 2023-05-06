@@ -74,9 +74,10 @@ async function get_stdin(opt) {
             // special key
             switch (dom.keyCode) {
                 case 8:
-                    if (terminal.buffer.active.cursorX <= startX) return;
-                    terminal.write('\b \b');
+                    if (terminal.buffer.active.cursorX <= startX && (!opt.hide)) break;
+                    if (!opt.hide) terminal.write('\b \b');
                     input = input.substring(0, input.length - 1);
+                    break;
                 case 13:
                     break_loop = true;
                     terminal.write('\n');
@@ -155,13 +156,10 @@ async function exec_cmd() {
     }
 
     if (cmds[command] != undefined) {
-        const startY = terminal.buffer.normal.cursorY
 
+        // execute command
         await cmds[command](c.split(' '), terminal, zshapi);
 
-        if (terminal.buffer.active.cursorX != 0 && startY != terminal.buffer.active.cursorY) {
-            terminal.write('\033[30;47m%\033[0m\n');
-        }
         print_prompt();
         return;
     }
